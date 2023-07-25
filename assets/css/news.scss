@@ -27,10 +27,7 @@
 
 //блок с главным заголовком----------------------------------------------
 .main-block {
-    //картинка сразу с заголовком
-    background: url(../images/design/news__main-with-text.png) center no-repeat;
-    //картинка без заголовка
-    // background: url(../images/design/news__main.png) no-repeat;
+    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     width: 100vw;
@@ -42,14 +39,12 @@
     }
 
     @media (max-width: $s) {
-        background: url(../images/design/news__main-with-text.png) center / cover no-repeat;
         background-position-x: 60%;
     }
 
     &__title {
         color: $text-light;
         font-weight: 700;
-        display: none;
     }
 }
 

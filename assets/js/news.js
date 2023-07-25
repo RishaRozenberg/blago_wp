@@ -4,70 +4,83 @@ document.addEventListener("DOMContentLoaded", function () {
 
     newsItems.forEach(function (newsItem) {
         const hiddenParagraphs = newsItem.querySelectorAll(".new__text");
+        const visibleParagraphs = newsItem.querySelectorAll(".new__text:not([style*='display: none'])");
         const moreButton = document.createElement("p");
         moreButton.className = "more";
         moreButton.textContent = "Читать далее";
 
-        hiddenParagraphs.forEach(function (paragraph, index) {
-            if (index >= 2) {
-                paragraph.style.display = "none";
+        let numVisibleWithCaps = 0;
+
+        hiddenParagraphs.forEach(function (paragraph) {
+            if (window.getComputedStyle(paragraph).getPropertyValue("display") !== "none") {
+                if (/[A-ZА-ЯЁ]/.test(paragraph.textContent)) {
+                    numVisibleWithCaps++;
+                }
             }
         });
 
-        moreButton.addEventListener("click", function () {
+        // Проверяем, если есть 3 и более видимых блока .new__text с хотя бы одной заглавной буквой, то отображаем кнопку "Читать далее"
+        if (numVisibleWithCaps >= 3) {
             hiddenParagraphs.forEach(function (paragraph, index) {
                 if (index >= 2) {
-                    paragraph.style.display = "block";
+                    paragraph.style.display = "none";
                 }
             });
-            moreButton.style.display = "none";
-            if (lessButton) {
-                lessButton.style.display = "inline";
-            }
-            newsItem.style.marginBottom = "20px";
-            localStorage.setItem(`news${newsItem.dataset.id}`, "true");
-        });
 
-        let lessButton = null;
-
-        if (hiddenParagraphs.length > 2) {
-            lessButton = document.createElement("p");
-            lessButton.className = "less";
-            lessButton.textContent = "Свернуть";
-            lessButton.style.display = "none";
-
-            lessButton.addEventListener("click", function () {
+            moreButton.addEventListener("click", function () {
                 hiddenParagraphs.forEach(function (paragraph, index) {
                     if (index >= 2) {
-                        paragraph.style.display = "none";
+                        paragraph.style.display = "block";
                     }
                 });
-                moreButton.style.display = "inline";
-                lessButton.style.display = "none";
-                newsItem.style.marginBottom = "0";
-                localStorage.setItem(`news${newsItem.dataset.id}`, "false");
-            });
-            newsItem.appendChild(lessButton);
-        }
-
-        newsItem.appendChild(moreButton);
-
-        const isExpanded = localStorage.getItem(`news${newsItem.dataset.id}`) === "true";
-        if (isExpanded) {
-            hiddenParagraphs.forEach(function (paragraph, index) {
-                if (index >= 2) {
-                    paragraph.style.display = "block";
+                moreButton.style.display = "none";
+                if (lessButton) {
+                    lessButton.style.display = "inline";
                 }
+                newsItem.style.marginBottom = "20px";
+                localStorage.setItem(`news${newsItem.dataset.id}`, "true");
             });
-            moreButton.style.display = "none";
-            if (lessButton) {
-                lessButton.style.display = "inline";
+
+            let lessButton = null;
+
+            if (hiddenParagraphs.length > 2) {
+                lessButton = document.createElement("p");
+                lessButton.className = "less";
+                lessButton.textContent = "Свернуть";
+                lessButton.style.display = "none";
+
+                lessButton.addEventListener("click", function () {
+                    hiddenParagraphs.forEach(function (paragraph, index) {
+                        if (index >= 2) {
+                            paragraph.style.display = "none";
+                        }
+                    });
+                    moreButton.style.display = "inline";
+                    lessButton.style.display = "none";
+                    newsItem.style.marginBottom = "0";
+                    localStorage.setItem(`news${newsItem.dataset.id}`, "false");
+                });
+                newsItem.appendChild(lessButton);
             }
-            newsItem.style.marginBottom = "20px";
+
+            newsItem.appendChild(moreButton);
+
+            const isExpanded = localStorage.getItem(`news${newsItem.dataset.id}`) === "true";
+            if (isExpanded) {
+                hiddenParagraphs.forEach(function (paragraph, index) {
+                    if (index >= 2) {
+                        paragraph.style.display = "block";
+                    }
+                });
+                moreButton.style.display = "none";
+                if (lessButton) {
+                    lessButton.style.display = "inline";
+                }
+                newsItem.style.marginBottom = "20px";
+            }
         }
     });
 });
-
 
 //перенос на след.страницу-------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", function () {
@@ -75,8 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const newsLines = document.querySelectorAll(".news__line");
     const itemsPerPage = 5; // Количество блоков new на одной странице
     const pagination = document.querySelector(".pagination");
-    let currentPage = sessionStorage.getItem("currentPage") || 1;
-    let scrollPosition = sessionStorage.getItem("scrollPosition") || 0;
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get("page")) || 1;
+    let hasScrolledToHeader = false;
 
     function showPage(pageNumber) {
         const startIndex = (pageNumber - 1) * itemsPerPage;
@@ -91,10 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 newsLines[index].style.display = "none";
             }
         });
-
-        // После отображения страницы прокручиваем к элементу с классом for-slider
-        const forSlider = document.querySelector(".for-slider");
-        forSlider.scrollIntoView({ behavior: "smooth" });
     }
 
     function updatePaginationButtons() {
@@ -117,7 +127,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 currentPage = i;
                 showPage(currentPage);
                 updatePaginationButtons();
-                sessionStorage.setItem("currentPage", currentPage);
+                history.replaceState(null, "", "?page=" + currentPage);
+
+                // Выполняем плавную прокрутку до .for-slider при переключении страницы
+                const forSliderElement = document.querySelector(".for-slider");
+                const headerHeight = document.querySelector(".header").offsetHeight;
+                const forSliderTop = forSliderElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                window.scrollTo({ top: forSliderTop, behavior: "smooth" });
             });
 
             pagination.appendChild(pageButton);
@@ -131,10 +147,18 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         pagination.style.display = "none";
     }
-});
 
-// Сохраняем текущую позицию страницы перед закрытием или переходом на другую страницу
-window.addEventListener("beforeunload", function () {
-    sessionStorage.setItem("scrollPosition", window.scrollY);
-});
+    // Проверяем, откуда был выполнен переход на страницу новостей
+    const referrer = document.referrer;
+    const currentURL = window.location.href;
+    if (referrer && !referrer.includes(currentURL)) {
+        scrollToHeader();
+    }
 
+    window.addEventListener("scroll", function () {
+        // Проверяем, было ли листание страницы новостей
+        if (!hasScrolledToHeader && window.scrollY > newsItems[0].getBoundingClientRect().top) {
+            scrollToHeader();
+        }
+    });
+});

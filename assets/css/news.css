@@ -1641,7 +1641,7 @@ body {
 }
 
 .main-block {
-  background: url(../images/design/news__main-with-text.png) center no-repeat;
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   width: 100vw;
@@ -1664,14 +1664,12 @@ body {
 }
 @media (max-width: 48rem) {
   .main-block {
-    background: url(../images/design/news__main-with-text.png) center/cover no-repeat;
     background-position-x: 60%;
   }
 }
 .main-block__title {
   color: #FFFFFF;
   font-weight: 700;
-  display: none;
 }
 
 .for-slider {
