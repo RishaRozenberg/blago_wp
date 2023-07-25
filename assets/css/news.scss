@@ -1,0 +1,201 @@
+@import './vars';
+@import './templates';
+
+
+.news {
+    flex-direction: column;
+
+    //линия
+    &__line {
+        margin: 3.1rem 0;
+        border: none;
+        border-top: 1px solid $text-green-light;
+
+        @media (max-width: $l) {
+            margin: 2.7em 0;
+        }
+
+        @media (max-width: $m) {
+            margin: 1.7em 0;
+        }
+
+        @media (max-width: $s) {
+            margin: 1em 0;
+        }
+    }
+}
+
+//блок с главным заголовком----------------------------------------------
+.main-block {
+    //картинка сразу с заголовком
+    background: url(../images/design/news__main-with-text.png) center no-repeat;
+    //картинка без заголовка
+    // background: url(../images/design/news__main.png) no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100vw;
+    height: 38.31rem;
+    @include adaptive-font (16, 10);
+
+    @media (max-width: $l) {
+        height: 38.31em;
+    }
+
+    @media (max-width: $s) {
+        background: url(../images/design/news__main-with-text.png) center / cover no-repeat;
+        background-position-x: 60%;
+    }
+
+    &__title {
+        color: $text-light;
+        font-weight: 700;
+        display: none;
+    }
+}
+
+.for-slider {
+    margin-bottom: 4.5rem;
+
+    @media (max-width: $l) {
+        margin-bottom: 4.5em;
+    }
+
+    @media (max-width: $s) {
+        margin-bottom: 3em;
+    }
+}
+
+
+//стиль одной новости--------------------------------------------
+
+.new {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include adaptive-font (16, 10);
+
+
+    //дата
+    &__date {
+        color: $text-green-light;
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-bottom: 1.31rem;
+
+
+        @media (max-width: $l) {
+            @include adaptive-font (24, 15);
+            margin-bottom: 0.87em;
+        }
+    }
+
+    //заголовок
+    &__title {
+        display: inline-block;
+        font-weight: 700;
+        margin-bottom: 1.31rem;
+        text-align: center;
+
+        @media (max-width: $l) {
+            margin-bottom: 0.87em;
+        }
+
+        @media (max-width: $s) {
+            text-align: start;
+        }
+    }
+
+    //текст
+    &__text {
+        font-size: 1.125rem;
+        line-height: 125%;
+        font-weight: 300;
+
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: $l) {
+            @include adaptive-font (18, 12);
+
+            &:not(:last-child) {
+                margin-bottom: 0.87em;
+            }
+        }
+    }
+
+    //отступ после картинки
+    &__img {
+        width: 100%;
+        margin-bottom: 1.6rem;
+
+        @media (max-width: $l) {
+            margin-bottom: 1.6em;
+        }
+    }
+}
+
+//стиль ссылки развернуть/свернуть
+.more,
+.less {
+    cursor: pointer;
+    color: $text-green-light;
+    text-decoration: underline;
+    font-weight: 300;
+    font-size: 1.125rem;
+
+    @media (max-width: $l) {
+        @include adaptive-font (18, 12);
+    }
+}
+
+//переключатель страниц
+.pagination {
+    display: flex !important;
+    justify-content: center;
+    margin-bottom: 3.1rem;
+    border: none;
+
+    @media (max-width: $l) {
+        margin-bottom: 2.7em;
+    }
+
+    @media (max-width: $m) {
+        margin-bottom: 1.7em;
+    }
+
+    @media (max-width: $s) {
+        margin-bottom: 1em;
+    }
+
+    .page-number {
+        color: $text-main;
+        font-size: 1.5rem;
+        font-weight: 500;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        margin: 0 0.3rem;
+        padding: 0;
+        display: inline;
+        position: relative;
+
+        @media (max-width: $l) {
+            @include adaptive-font (24, 15);
+            margin: 0 0.2em;
+        }
+
+
+        &_active {
+            color: $text-main;
+            text-decoration: underline;
+            font-size: 2rem;
+
+            @media (max-width: $l) {
+                @include adaptive-font (32, 20);
+            }
+        }
+    }
+
+}
