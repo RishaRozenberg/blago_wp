@@ -9,13 +9,12 @@ get_header();
     <section class="main-about">
         <div class="main-about__container container">
             <div class="main-about__content">
-                <h1 class="main-about__title main-title">Центр помощи «Хаер» -
-                        единый портал для НКО и заявок о помощи в Набережных Челнах</h1>
+                <h1 class="main-about__title main-title"><?php the_title(); ?></h1>
                 <p class="main-about__text text">На нашем портале вы можете разместить свою
                         заявку на
                         помощь, а
                         зарегистрированные НКО имеют возможность откликнуться и предложить свою
-                        поддержку.</p>
+                        поддержку.</p>R
                 <p class="main-about__text text">Центр помощи "Хаер" создает дружественное
                         сообщество, где
                         любой

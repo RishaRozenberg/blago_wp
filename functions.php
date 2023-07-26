@@ -14,14 +14,15 @@ function haer_blago_assets () {
         wp_enqueue_style('news', get_template_directory_uri() . '/assets/css/news.css');
         wp_enqueue_script('news-js', get_template_directory_uri() . '/assets/js/news.js', null, null, true );
     }
+
+    elseif (is_page_template('templates/about-nko.php')) {
+        wp_enqueue_style('about-nko', get_template_directory_uri() . '/assets/css/about-nko.css');
+    }
 }
 
 //панель управления
 // show_admin_bar(false);
 
-// elseif (is_page('about-us')) {
-//     wp_enqueue_style('about-us', get_template_directory_uri() . '/assets/css/about-us.css');
-// }
 // elseif (is_page('nco-account')) {
 //     wp_enqueue_style('nco-account', get_template_directory_uri() . './assets/css/nco-account.css');
 //     wp_enqueue_script('nco-account-js', get_template_directory_uri() . './assets/js/nco-account.js', array(), '20151215', true );

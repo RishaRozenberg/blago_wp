@@ -8,9 +8,9 @@ get_header();
     <main class="main">
         <!-- Название НКО -->
         <section class="about-nko">
-            <div class="about-nko__container container">
+            <div class="about-nko__container container" style="background-image: url(<?= CFS()->get('main_bg'); ?>)">
                 <div class="about-nko__content">
-                    <h2 class="about-nko__title"> Некоммерческая благотворительная организация</h2>
+                    <h2 class="about-nko__title"><?php the_title(); ?></h2>
                     <about-nko__btn class="about-nko__btn btn">
                         <button class="btn__help help">Подать заявку на помощь</button>
                     </about-nko__btn>

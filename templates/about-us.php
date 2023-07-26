@@ -7,8 +7,8 @@ get_header();
     <main>
         <!-- о компании -->
         <div class="about-company">
-            <div class="about-company__container container">
-                <h2 class="about-company__title second-title">О компании</h2>
+            <div class="about-company__container container" style="background-image: url(<?= CFS()->get('main_bg'); ?>)">
+                <h2 class="about-company__title second-title"><?php the_title(); ?></h2>
             </div>
         </div>
         <!-- о компании -->

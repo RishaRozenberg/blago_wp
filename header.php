@@ -22,7 +22,6 @@
         <div class="header__container container">
             <!-- лого -->
                 <?php the_custom_logo(); ?>
-            <!-- <img src="./assets/images/icons/header__logo.png" alt="center logo" class="header__logo"> -->
             <div class="header__content">
                 <?php 
                 wp_nav_menu([

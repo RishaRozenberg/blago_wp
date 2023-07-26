@@ -1657,7 +1657,6 @@ body {
 
 .about-nko__container {
   background-color: #FFFFFF;
-  background-image: url(../../assets/images/design/background_about-nko.png);
   background-position: center;
   background-size: cover;
   width: 100vw;
@@ -2120,7 +2119,8 @@ body {
   height: 2.6rem;
   width: 2.6rem;
 }
-.reviews label, .reviews a {
+.reviews label,
+.reviews a {
   cursor: pointer;
 }
 .reviews .reviews__slider input {
@@ -2214,7 +2214,8 @@ body {
   height: 2.6rem;
   width: 2.6rem;
 }
-.reviews label, .reviews a {
+.reviews label,
+.reviews a {
   cursor: pointer;
 }
 .reviews .reviews__medium input {
